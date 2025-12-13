@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1920" fill="#FFD700"/>
+  <path d="M540 300c-176.7 0-320 143.3-320 320s143.3 320 320 320 320-143.3 320-320-143.3-320-320-320zm160 256c48 0 88 40 88 88s-40 88-88 88h-160c-48 0-88-40-88-88s40-88 88-88h160z" fill="#FF4500"/>
+  <path d="M540 512c24 0 44 20 44 44s-20 44-44 44-44-20-44-44 20-44 44-44zm0 0" fill="#FFD700"/>
+  <text x="540" y="1200" font-family="Arial" font-size="120" font-weight="bold" fill="#FF4500" text-anchor="middle">老虎机游戏</text>
+  <path d="M540 1400c-96 0-176 80-176 176s80 176 176 176 176-80 176-176-80-176-176-176zm0 0" fill="#FFA500"/>
+</svg>
