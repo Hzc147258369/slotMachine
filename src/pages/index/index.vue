@@ -395,6 +395,7 @@ setTimeout(() => {
 
 // 用于押注
 const buttonClick = function (item) {
+  scoreStraa.value = true;
   if (score.value < 10 * rate.value[ratenum.value]) {
     uni.showToast({
       title: "余额不足",
@@ -460,7 +461,7 @@ const array = ref([
       { number: 1, name: "tangerine", magnification: 2, double: 2 },
       { number: 2, name: "bell", magnification: 2, double: 2 },
       { number: 3, name: "king", magnification: 30, double: 0 },
-      { number: 4, name: "king", magnification: 100, double: 0 },
+      { number: 4, name: "king", magnification: 1000, double: 0 },
       { number: 5, name: "king", magnification: 50, double: 0 },
       { number: 6, name: "apple", magnification: 5, double: 0 },
     ],
@@ -804,7 +805,8 @@ const click = (M, N) => {
   // 当前概率数组
   // 清理浮点误差
   let randomIndex = Math.floor(Math.random() * array.length);
-  stopNum.value = 120 + array[randomIndex];
+  stopNum.value = 120 + 4
+  // array[randomIndex];
   num.value = Math.floor(Math.random() * (M - N + 1)) + N;
   aaa(0);
   guan();
@@ -912,7 +914,7 @@ onLoad(() => {
     score.value = +scoreStr;
 
     // 验证数据格式是否正确（必须是数字且非负）
-    if (typeof +scoreStr === "number" && +scoreStr >= 0) {
+    if (typeof +scoreStr === "number" && +scoreStr > 0) {
       score.value = +scoreStr;
     } else {
       // 数据格式不正确，清理本地存储并使用默认值
@@ -963,7 +965,6 @@ watch(score, (newScore) => {
   if (!scoreStraa.value) {
     return;
   }
-
   let encryptedScore = "";
   // 转为字符串
   const scoreStr = newScore.toString();
