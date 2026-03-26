@@ -33,7 +33,6 @@
       class="item"
       :class="['item-top', `item-top-${index}`]"
     >
-      {{ item.number }}
       <image
         :src="`/static/image/${item.name}${item.double ? 'big' : ''}.png`"
         class="item-image"
@@ -46,7 +45,6 @@
       class="item"
       :class="['item-right', `item-right-${index}`]"
     >
-      {{ item.number }}
       <image
         :src="`/static/image/${item.name}${item.double ? 'big' : ''}.png`"
         class="item-image"
@@ -59,7 +57,6 @@
       class="item"
       :class="['item-bottom', `item-bottom-${index}`]"
     >
-      {{ item.number }}
       <image
         :src="`/static/image/${item.name}${item.double ? 'big' : ''}.png`"
         style="
@@ -78,7 +75,6 @@
       class="item"
       :class="['item-left', `item-left-${index}`]"
     >
-      {{ item.number }}
       <image
         :src="`/static/image/${item.name}${item.double ? 'big' : ''}.png`"
         style="
@@ -130,9 +126,8 @@
   <!-- 输入框 -->
 </template>
 <script setup>
-import { watch } from "vue";
+import { watch, onMounted, ref } from "vue";
 import CryptoJS from "crypto-js";
-import { ref } from "vue"; 
 import { onUnload, onLoad } from "@dcloudio/uni-app";
 
 // 押注数量
@@ -912,12 +907,18 @@ const generateProbabilityArray = () => {
 // 关闭页面时清除定时器
 onUnload(() => {
   clearTimers();
-  uni.setStorageSync("score", score.value);
 });
-// 打开页面时从本地存储获取分数
-onLoad(() => {
+// 页面加载完毕时从本地存储获取分数
+// 延时执行，确保DOM渲染完成
+setTimeout(() => {
   try {
     const storedScore = uni.getStorageSync("score");
+    if (!storedScore) {
+      // 如果本地存储为空，使用默认值
+      score.value = 100;
+      // 可以添加提示信息
+      return;
+    }
     // 解密
     const bytes = CryptoJS.AES.decrypt(storedScore, "h0911925");
     const originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -931,12 +932,12 @@ onLoad(() => {
         scoreStr += digit.toString();
       }
     }
-    score.value = +scoreStr;
-
     // 验证数据格式是否正确（必须是数字且非负）
-    if (typeof +scoreStr === "number" && +scoreStr > 0) {
+    if (typeof +scoreStr === "number" && +scoreStr >= 0) {
       score.value = +scoreStr;
     } else {
+      console.log(scoreStr);
+      console.log(score.value);
       // 数据格式不正确，清理本地存储并使用默认值
       uni.removeStorageSync("score");
       score.value = 100;
